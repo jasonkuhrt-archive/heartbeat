@@ -5,7 +5,7 @@ A good heartbeat timer
 
 ## Installation
 
-    npm install set-heartbeat
+    npm install jasonkuhrt-heartbeat
 
 ## Example
 ```js
