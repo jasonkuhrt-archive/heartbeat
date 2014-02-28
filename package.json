@@ -1,7 +1,7 @@
 {
-  "name": "heartbeat",
+  "name": "jasonkuhrt-heartbeat",
   "version": "0.0.0",
-  "description": "A food heartbeat timer",
+  "description": "A good heartbeat timer",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -18,6 +18,8 @@
     "timer",
     "heartbeat",
     "interval",
+    "connection",
+    "monitor",
     "pulse",
     "keepalive"
   ],
