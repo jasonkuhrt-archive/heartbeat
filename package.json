@@ -1,0 +1,33 @@
+{
+  "name": "heartbeat",
+  "version": "0.0.0",
+  "description": "A heartbeat timer",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --reporter spec ./test",
+    "dev": "mocha --reporter spec --watch ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jasonkuhrt/heartbeat.git"
+  },
+  "keywords": [
+    "timer",
+    "heartbeat",
+    "interval",
+    "pulse",
+    "keepalive"
+  ],
+  "author": "Jason Kuhrt <jasonkuhrt@me.com> (http://jasonkuhrt.com/)",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/jasonkuhrt/heartbeat/issues"
+  },
+  "dependencies": {
+    "jasonkuhrt-counter": "0.0.1"
+  },
+  "devDependencies": {}
+}
