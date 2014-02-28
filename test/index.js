@@ -53,7 +53,13 @@ describe('Heartbeat', function(){
     var thump = Heartbeat(count.inc, 10);
     setTimeout(Heartbeat.clearHeartbeat, 5, thump);
     setTimeout(assertNoCount(count, done), 15);
-
+  });
+  it('Calling clearHeartbeat multiple times is a noop', function(done){
+    var thump = Heartbeat(count.inc, 10);
+    setTimeout(Heartbeat.clearHeartbeat, 1, thump);
+    setTimeout(Heartbeat.clearHeartbeat, 3, thump);
+    setTimeout(Heartbeat.clearHeartbeat, 6, thump);
+    setTimeout(assertNoCount(count, done), 15);
   });
 
 });
