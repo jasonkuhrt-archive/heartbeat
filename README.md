@@ -1,4 +1,4 @@
-# heartbeat
+# heartbeat [![Build Status](https://travis-ci.org/jasonkuhrt/heartbeat.png?branch=master)](https://travis-ci.org/jasonkuhrt/heartbeat)
 
 A good heartbeat timer
 
