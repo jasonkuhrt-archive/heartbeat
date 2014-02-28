@@ -46,8 +46,10 @@ Socket timed out. Hearbeat history prior to death was: [..., 30, 28, 34, 30, 56,
 
 ## API
 
-#### Heartbeat(onFlatline, intervalMs, maxHistory = 600)
+#### Heartbeat → .setHeartbeat
 
+
+#### .setHeartbeat(onFlatline, intervalMs, maxHistory = 600)
     Heartbeat h; Int c, i, j;  :: ([c] -> *?) i, j? -> h
 
   Returns a heartbeat instance. A heartbeat instance is a function. Invoke it to keep the heartbeat going. The identifier is typically `thump` (see guide).
@@ -64,8 +66,6 @@ Socket timed out. Hearbeat history prior to death was: [..., 30, 28, 34, 30, 56,
 
   Set to `0` to disable.
 
-
-#### .setHeartbeat → Heartbeat
 
 #### .clearHeartbeat(heartbeat)
 
