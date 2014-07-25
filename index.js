@@ -1,51 +1,41 @@
-'use strict';
-var Counter = require('jasonkuhrt-counter');
+var Counter = require('jasonkuhrt-counter')
 
-function existy(x){
-  return typeof x !== 'undefined' && x !== null;
-}
+module.exports = setHeartbeat
+module.exports.setHeartbeat = setHeartbeat
+module.exports.clear = clearHeartbeat
 
 
 
 // Heartbeat h; Int c, i, j;  :: ([c] -> *?) i, j? -> h
 //
-function setHeartbeat(f, ms, maxHistory){
-  if (!existy(maxHistory)) maxHistory = 600;
-  var history = [];
-  var count = Counter(0);
-  var thumper = count.inc;
-  var timer = setInterval(onInterval, ms);
+function setHeartbeat(f, ms){
+  var thumps = Counter(0)
+  var thump = thumps.inc
+  var interval = setInterval(onInterval, ms)
   function onInterval(){
-    if (!_checkIn(count, history, maxHistory)) _onFlatline(timer, history, f);
+    if (did_flatline(thumps)) {
+      clearInterval(interval)
+      f()
+    }
   }
-  thumper._timer = timer;
-  return thumper;
+  thump._interval = interval
+  return thump
 }
 
 
 // Heartbeat a :: a -> void
 //
 function clearHeartbeat(heartbeat){
-  return clearInterval(heartbeat._timer);
+  return clearInterval(heartbeat._interval)
 }
 
 
 
-// Domain helpers
 
-function _checkIn(count, history, maxHistory){
-  history.push(count.value());
-  if (history.length > maxHistory) history.shift();
-  return count.value() ? count.reset() && true : false ;
+
+
+// Private
+
+function did_flatline(thumps){
+  return !thumps.value() ? thumps.reset() && true : false
 }
-
-function _onFlatline(timer, history, f){
-  clearInterval(timer);
-  f(history);
-}
-
-
-
-module.exports = setHeartbeat;
-module.exports.setHeartbeat = setHeartbeat;
-module.exports.clearHeartbeat = clearHeartbeat;

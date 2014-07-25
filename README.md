@@ -10,17 +10,16 @@ A good heartbeat timer
 ## Example
 ```js
 var tcp = require('net');
-var heartbeat = require('heartbeat'),
-    clearHeartbeat = heartbeat.clearHeartbeat;
+var heartbeat = require('heartbeat');
 
 tcp.createServer(9000, function(socket){
   /* If we the socket ever doesn't send data for ten
   consecutive seconds, consider it dead.*/
-  var thump = heartbeat(onFlatline, 10000, 300);
+  var thump = heartbeat(onFlatline, 10000);
   socket.on('data', thump);
 
-  function onFlatline(history){
-    log.warn('Socket timed out. Hearbeat history prior to death was: %j', history);
+  function onFlatline(){
+    log.warn('Socket timed out, destroying socket.');
     socket.removeListener('data', thump);
     socket.removeListener('end', onCleanDisconnect);
     socket.destroy();
@@ -32,7 +31,7 @@ tcp.createServer(9000, function(socket){
 
   function onCleanDisconnect(){
     socket.removeListener('data', thump);
-    clearHeartbeat(thump);
+    heartbeat.clear(thump);
   }
 });
 ```
@@ -41,7 +40,7 @@ tcp.createServer(9000, function(socket){
 ...
 ... (some time passes, your app does stuff, then maybe...)
 ...
-Socket timed out. Hearbeat history prior to death was: [..., 30, 28, 34, 30, 56, 157, 124, 0]
+Socket timed out, destroying socket.
 ```
 
 ## API
@@ -49,25 +48,18 @@ Socket timed out. Hearbeat history prior to death was: [..., 30, 28, 34, 30, 56,
 #### Heartbeat → .setHeartbeat
 
 
-#### .setHeartbeat(onFlatline, intervalMs, maxHistory = 600)
-    Heartbeat h; Int c, i, j;  :: ([c] -> *?) i, j? -> h
+#### .setHeartbeat(onFlatline, intervalMs)
+    Heartbeat h; Int i;  :: ( -> ), i -> h
 
   Returns a heartbeat instance. A heartbeat instance is a function. Invoke it to keep the heartbeat going. The identifier is typically `thump` (see guide).
 
   - `onFlatline` is invoked when/if `thump` is *not* invoked during an interval.
 
-  A heartbeat history is passed to `onFlatline` (see `maxHistory`).
-
   - `intervalMs` sets the time between thump checks.
 
-  - `maxHistory` sets the size of heartbeat history to keep.
-
-  On every interval the number of times `thump` was invoked is pushed to this history.
-
-  Set to `0` to disable.
 
 
-#### .clearHeartbeat(heartbeat)
+#### .clear(heartbeat)
 
     Heartbeat a :: a -> undefined
 
