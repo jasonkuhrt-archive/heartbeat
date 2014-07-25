@@ -1,6 +1,6 @@
 {
   "name": "jasonkuhrt-heartbeat",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A good heartbeat timer",
   "main": "index.js",
   "directories": {
